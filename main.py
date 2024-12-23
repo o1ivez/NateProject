@@ -12,8 +12,7 @@ def buttonClick():
         exportToArduino(time, temp)
     else:
         errorMessage = Message(mainLoop, text="Please enter valid values",bg='red').grid(row=3, pady=3)
-
-#TODO this shit
+#todo
 def exportToArduino(time, temp):
     pass
 
@@ -22,12 +21,12 @@ mainLoop = tk.Tk()
 mainLoop.title('Arduino Setup')
 
 #sets time label and entry box
-tk.Label(mainLoop, text='Input Time').grid(row=0, pady=3)
+tk.Label(mainLoop, text='Input Time (sec)').grid(row=0, pady=3)
 timeInput = tk.Entry(mainLoop)
 timeInput.grid(row=0, column=1, pady=3)
 
 #sets temp label and entry box
-tk.Label(mainLoop, text='Input Temperature').grid(row=1, pady=3)
+tk.Label(mainLoop, text='Input Temperature (f)').grid(row=1, pady=3)
 tempInput = tk.Entry(mainLoop)
 tempInput.grid(row=1, column=1, pady=3)
 
