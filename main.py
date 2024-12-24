@@ -1,6 +1,8 @@
-#export info to arduino
+#TODO get arduino code to make it so that it properly works.
 import tkinter as tk
 from tkinter import *
+import serial   #need to pip install pyserial for this to work
+
 
 def buttonClick():
     #get the data from and entry box
@@ -12,13 +14,18 @@ def buttonClick():
         exportToArduino(time, temp)
     else:
         errorMessage = Message(mainLoop, text="Please enter valid values",bg='red').grid(row=3, pady=3)
-#todo
+
 def exportToArduino(time, temp):
+    #idk if this is good syntax for sending 2 things but this is the bassis of the sending of the data the arduino program is needed to see hjow its managed and to phusicaly change the stuff
+    arduino.write(bytes(time,'utf-8')) #this breaks program right now
     pass
 
 #sets up tkinter main gui
 mainLoop = tk.Tk()
 mainLoop.title('Arduino Setup')
+
+#set up arduino connection
+arduino = serial.Serial(port='COM4', baudrate=115200, timeout=.1) #this depends on how the arduino is set up physicaly
 
 #sets time label and entry box
 tk.Label(mainLoop, text='Input Time (sec)').grid(row=0, pady=3)
