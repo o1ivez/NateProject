@@ -3,7 +3,6 @@ import tkinter as tk
 from tkinter import *
 import serial   #need to pip install pyserial for this to work
 
-
 def buttonClick():
     #get the data from and entry box
     time = timeInput.get()
