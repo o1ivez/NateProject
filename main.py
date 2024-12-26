@@ -1,22 +1,24 @@
-#TODO get arduino code to make it so that it properly works.
 import tkinter as tk
 from tkinter import *
 import serial   #need to pip install pyserial for this to work
+import time
 
 def buttonClick():
     #get the data from and entry box
-    time = timeInput.get()
+    inputTime = timeInput.get()
     temp = tempInput.get()
     tk.Canvas(mainLoop, width = 70, height = 54, bg ='#F0F0F0').grid(row=3, pady=3) #makes canvas to cover up prior error or sucess messages
-    if(time.isdigit() and temp.isdigit()):
+    if(inputTime.isdigit() and temp.isdigit()):
         sucessMessgae = Message(mainLoop, text="Values sent to Arduino",bg='lightgreen').grid(row=3, pady=3)
-        exportToArduino(time, temp)
+        exportToArduino(inputTime, temp)
     else:
         errorMessage = Message(mainLoop, text="Please enter valid values",bg='red').grid(row=3, pady=3)
 
-def exportToArduino(time, temp):
-    #idk if this is good syntax for sending 2 things but this is the bassis of the sending of the data the arduino program is needed to see hjow its managed and to phusicaly change the stuff
-    arduino.write(bytes(time,'utf-8')) #this breaks program right now
+def exportToArduino(inputTime, temp): #BIG NOTE, DO NOT USE ARDUINO SERIAL MONITOR WHILE RUNNING
+    #sends both time and temp data to the arduno 
+    arduino.write(bytes(inputTime,'utf-8'))
+    time.sleep(0.005)
+    arduino.write(bytes(temp,'utf-8'))
     pass
 
 #sets up tkinter main gui
@@ -24,7 +26,7 @@ mainLoop = tk.Tk()
 mainLoop.title('Arduino Setup')
 
 #set up arduino connection
-arduino = serial.Serial(port='COM4', baudrate=115200, timeout=.1) #this depends on how the arduino is set up physicaly
+arduino = serial.Serial(port='COM7', baudrate=115200, timeout=.1) #this depends on how the arduino is set up physicaly ie change com port if needed
 
 #sets time label and entry box
 tk.Label(mainLoop, text='Input Time (sec)').grid(row=0, pady=3)
