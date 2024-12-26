@@ -3,8 +3,8 @@ int j;
 
 void setup() {
   Serial.begin(115200);               //Configure Arduino Serial and LED out
-	Serial.setTimeout(1); 
-	pinMode(LED_BUILTIN, OUTPUT);
+  Serial.setTimeout(1); 
+  pinMode(LED_BUILTIN, OUTPUT);
 }
 
 void loop() {
