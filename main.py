@@ -5,16 +5,18 @@ import time
 
 def buttonClick():
     #get the data from entry box
-    global current_message
     inputTime = timeInput.get()
     temp = tempInput.get()
+    global current_message
     if current_message is not None:
         current_message.destroy()
     if inputTime.isdigit() and temp.isdigit():
-        current_message = Message(mainLoop, text="Values sent to Arduino", bg='lightgreen').grid(row=3, pady=3)
+        current_message = Message(mainLoop, text="Values sent to Arduino", bg='lightgreen')
+        current_message.grid(row=3, pady=3)
         exportToArduino(inputTime, temp)
     else:
-        current_message = Message(mainLoop, text="Please enter valid values", bg='red').grid(row=3, pady=3)
+        current_message = Message(mainLoop, text="Please enter valid values", bg='red')
+        current_message.grid(row=3, pady=3)
 
 def exportToArduino(inputTime, temp): #BIG NOTE, DO NOT USE ARDUINO SERIAL MONITOR WHILE RUNNING
     #sends both time and temp data to the arduno 
@@ -26,6 +28,7 @@ def exportToArduino(inputTime, temp): #BIG NOTE, DO NOT USE ARDUINO SERIAL MONIT
 #sets up tkinter main gui
 mainLoop = tk.Tk()
 mainLoop.title('Arduino Setup')
+current_message = None
 
 #set up arduino connection
 arduino = serial.Serial(port='COM7', baudrate=115200, timeout=.1) #this depends on how the arduino is set up physicaly ie change com port if needed
