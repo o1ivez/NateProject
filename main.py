@@ -5,14 +5,16 @@ import time
 
 def buttonClick():
     #get the data from and entry box
+    global current_message
     inputTime = timeInput.get()
     temp = tempInput.get()
-    tk.Canvas(mainLoop, width = 70, height = 54, bg ='#F0F0F0').grid(row=3, pady=3) #makes canvas to cover up prior error or sucess messages
-    if(inputTime.isdigit() and temp.isdigit()):
-        sucessMessgae = Message(mainLoop, text="Values sent to Arduino",bg='lightgreen').grid(row=3, pady=3)
+    if current_message is not None:
+        current_message.destroy()
+    if inputTime.isdigit() and temp.isdigit():
+        current_message = Message(mainLoop, text="Values sent to Arduino", bg='lightgreen').grid(row=3, pady=3)
         exportToArduino(inputTime, temp)
     else:
-        errorMessage = Message(mainLoop, text="Please enter valid values",bg='red').grid(row=3, pady=3)
+        current_message = Message(mainLoop, text="Please enter valid values", bg='red').grid(row=3, pady=3)
 
 def exportToArduino(inputTime, temp): #BIG NOTE, DO NOT USE ARDUINO SERIAL MONITOR WHILE RUNNING
     #sends both time and temp data to the arduno 
