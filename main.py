@@ -4,7 +4,7 @@ import serial   #need to pip install pyserial for this to work
 import time
 
 def buttonClick():
-    #get the data from and entry box
+    #get the data from entry box
     global current_message
     inputTime = timeInput.get()
     temp = tempInput.get()
