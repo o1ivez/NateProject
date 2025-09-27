@@ -1,2 +1,2 @@
-# Readme
+# How to Run
 To run the gui first pyserial need to be installed through pip, next program and upload the .ino file to the arduino, then run the main.py file. The main file is set up to where COM7 is hard coded to be used for serial communcation, if a different port was used for the arduino change that in the code to match the com port used. Additionaly do not use the arduino serial monitor while running the program. 
