@@ -3,20 +3,20 @@ from tkinter import *
 import serial   #need to pip install pyserial for this to work
 import time
 
-def buttonClick():
+def sendTimeAndTemp():
     #get the data from entry box
     inputTime = timeInput.get()
     temp = tempInput.get()
-    global current_message
-    if current_message is not None:
-        current_message.destroy()
+    global timeTempSucessOrFail
+    if timeTempSucessOrFail is not None:
+        timeTempSucessOrFail.destroy()
     if inputTime.isdigit() and temp.isdigit():
-        current_message = Message(mainLoop, text="Values sent to Arduino", bg='lightgreen')
-        current_message.grid(row=3, pady=3)
+        timeTempSucessOrFail = Message(root, text="Values sent to Arduino", bg='lightgreen', width=75)
+        timeTempSucessOrFail.grid(row=3, pady=3)
         exportToArduino(inputTime, temp)
     else:
-        current_message = Message(mainLoop, text="Please enter valid values", bg='red')
-        current_message.grid(row=3, pady=3)
+        timeTempSucessOrFail = Message(root, text="Please enter valid values", bg='red', width=75)
+        timeTempSucessOrFail.grid(row=3, pady=3)
 
 def exportToArduino(inputTime, temp): #BIG NOTE, DO NOT USE ARDUINO SERIAL MONITOR WHILE RUNNING
     #sends both time and temp data to the arduno 
@@ -26,28 +26,31 @@ def exportToArduino(inputTime, temp): #BIG NOTE, DO NOT USE ARDUINO SERIAL MONIT
     pass
 
 #sets up tkinter main gui
-mainLoop = tk.Tk()
-mainLoop.title('Arduino Setup')
-current_message = None
+root = tk.Tk()
+root.title('Arduino Setup')
+root.geometry('500x500')
+
+#set up message vars, there is prob a better way of doing this
+timeTempSucessOrFail = None
 
 #set up arduino connection
 arduino = serial.Serial(port='COM7', baudrate=115200, timeout=.1) #this depends on how the arduino is set up physicaly ie change com port if needed
 
 #sets time label and entry box
-tk.Label(mainLoop, text='Input Time (sec)').grid(row=0, pady=3)
-timeInput = tk.Entry(mainLoop)
+tk.Label(root, text='Input Time (sec)').grid(row=0, pady=3)
+timeInput = tk.Entry(root)
 timeInput.grid(row=0, column=1, pady=3)
 
 #sets temp label and entry box
-tk.Label(mainLoop, text='Input Temperature (f)').grid(row=1, pady=3)
-tempInput = tk.Entry(mainLoop)
+tk.Label(root, text='Input Temperature (f)').grid(row=1, pady=3)
+tempInput = tk.Entry(root)
 tempInput.grid(row=1, column=1, pady=3)
 
 #sets up export changes button
-exportButton = tk.Button(mainLoop, text='Export Specifications', width=25, command = buttonClick).grid(row=2, column=2, pady=3)
+exportButton = tk.Button(root, text='Export Specifications', width=25, command = sendTimeAndTemp).grid(row=2, column=2, pady=3)
 
 #sets up stop button on program
-closeButton = Button(mainLoop, text='Close Program', width=25, command=mainLoop.destroy).grid(row=3, column=2, pady=3)
+closeButton = Button(root, text='Close Program', width=25, command=root.destroy).grid(row=3, column=2, pady=3)
 
 #keeps gui running until interrupt occurs
-mainLoop.mainloop()
+root.mainloop()
